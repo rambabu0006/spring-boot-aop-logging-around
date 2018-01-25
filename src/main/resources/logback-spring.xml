@@ -1,0 +1,48 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_FILE" value="/logs/WebSphere/sibpns2a-pns/myinfo.log"/> 
+    <appender name="TIME_BASED_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}</file>
+   		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">    	
+     		daily rollover
+	    	  	<fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.log</fileNamePattern> DailyRollingFileAppender
+    	 		<maxHistory>30</maxHistory>
+   		</rollingPolicy>
+   	<encoder>
+     		<pattern>%date [%thread] %-5level %logger{36} - %msg%n</pattern>
+   	</encoder>
+ 	</appender>
+    
+ 	 <root level="INFO">
+    	<appender-ref ref="TIME_BASED_FILE" />
+  	 </root>
+    
+ </configuration> -->
+ 
+<configuration>
+    <property name="APP_LOG_FILE" value="/logs/WebSphere/applog.log"/> 
+    <property name="PERFORMENCE_LOG" value="/logs/WebSphere/peformence_log.log"/> 
+    
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${APP_LOG_FILE}</file>
+		<append>true</append>
+		<encoder>
+     		<pattern>%date [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="ANALYTICS-FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${PERFORMENCE_LOG}</file>
+		<append>true</append>
+		<encoder>
+     		<pattern>%date [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- additivity=false ensures analytics data only goes to the analytics 
+		log -->
+	<logger name="analytics" level="DEBUG" additivity="false">
+		<appender-ref ref="ANALYTICS-FILE" />
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
